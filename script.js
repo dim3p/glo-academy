@@ -1,11 +1,11 @@
 // lesson02
 // Step 1
-let title = 'Lesson02';
-let screens = "Простые, Сложные, Интерактивные";
-let screenPrice = 100500;
-let rollback = 50;
-let fullPrice = 350000;
-let adaptive = true;
+const title = 'Lesson02';
+const screens = "Простые, Сложные, Интерактивные";
+const screenPrice = 100500;
+const rollback = 50;
+const fullPrice = 350000;
+const adaptive = true;
 
 // Step 2
 console.log("Type title:", typeof title);
