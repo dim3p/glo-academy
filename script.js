@@ -1,18 +1,17 @@
 'use strict';
 // lesson04
 
-let title = prompt("Как называется ваш проект?");
-let screens = prompt("Какие типы экранов нужно разработать?", "пример: \"Простые, Сложные, Интерактивные\"");
-let screenPrice = +prompt("Сколько будет стоить данная работа?", "пример:12000");
-let rollback = 50;
-let adaptive = confirm("Нужен ли адаптив на сайте?");
-let ask1 = "Какой дополнительный тип услуги нужен?";
-let ask2 = "Сколько это будет стоить?";
-let service1 = prompt(ask1);
-let servicePrice1 = +prompt(ask2);
-let service2 = prompt(ask1);
-let servicePrice2 = +prompt(ask2);
-
+const title = prompt("Как называется ваш проект?");
+const screens = prompt("Какие типы экранов нужно разработать?", "пример: \"Простые, Сложные, Интерактивные\"");
+const screenPrice = +prompt("Сколько будет стоить данная работа?", "пример:12000");
+const rollback = 50;
+const adaptive = confirm("Нужен ли адаптив на сайте?");
+const ask1 = "Какой дополнительный тип услуги нужен?";
+const ask2 = "Сколько это будет стоить?";
+const service1 = prompt(ask1);
+const servicePrice1 = +prompt(ask2);
+const service2 = prompt(ask1);
+const servicePrice2 = +prompt(ask2);
 let fullPrice;
 
 const showTypeOf = function (variable) {
