@@ -99,6 +99,5 @@ const appData = {
 
 }
 
-
 appData.start();
 
