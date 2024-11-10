@@ -1,3 +1,7 @@
+// lesson07
+
+'use strict';
+
 const books = [
 	{ id: 0, name: 'Дорога домой', author: 'Виталий Зыков', price: 1200 },
 	{ id: 1, name: 'Война за выживание', author: 'Виталий Зыков', price: 1500 },
@@ -59,7 +63,7 @@ const books = [
 // arr.forEach(function(item, index, array) {
 // 	... делает что-то с item});
 
-// books.forEach(function(item, index, array) {
+// books.forEach(function(item) {
 // 	item.price = item.price + 'руб'
 // });
 
@@ -71,17 +75,46 @@ const books = [
 // 		возвращается новое значение вместо элемента
 // });
 
-const newArray = books.map(function (item, index, array) {
-	return item
-});
+// const newArray = books.map(function(item) {
+// 	item.price = item.price + 'руб'
+// 	return item
+// });
 
-console.log(newArray);
+// console.log(newArray);
 
 
-
-
-// 3) filter()
+// 3) filter()  создает новый массив!
 // arr.filter(function(item, index, array) {
 // 		если true - элемент добавляется к результату и перебор продолжается
 // 		возвращается пустой массив в случае если ничего не найдено
 // });
+
+// const newArray = books.filter(function(item) {
+// 	return item.author === 'Виталий Зыков'
+// });
+
+// console.log(newArray);
+
+// 4) Последовательная обработка  REDUCE 
+// let value = arr.reduce(function(previousValue, item, index, array) {
+// 		если true - элемент добавляется к результату и перебор продолжается
+// 		возвращается пустой массив в случае если ничего не найдено
+// }, [initial]);
+
+// const result = books.reduce(function(sum, item){
+// 	return sum + item.price
+// }, 0)
+
+// console.log(result);
+
+// 5) Последовательная обработка  reduceRight  переходит по массиву справа на лево
+// let value = arr.reduce(function(previousValue, item, index, array) {
+// 		если true - элемент добавляется к результату и перебор продолжается
+// 		возвращается пустой массив в случае если ничего не найдено
+// }, [initial]);
+
+const result = books.reduceRight(function (sum, item) {
+	return sum + item.price
+}, 0)
+
+console.log(result);
