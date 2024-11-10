@@ -1,18 +1,12 @@
 'use scrict';
 
-function one(x) {
-	function two() {
-		const a = +prompt("Введите число")
-		x--
-
-		console.log(a);
-		console.log(x);
-		if (a !== x) {
-			two()
-		}
+function counter(n) {
+	return function (x) {
+		return x + n
 	}
-
-	two()
 }
 
-one(10)
+let sum = counter(1)
+// console.log(sum);
+console.log(sum(15));
+console.log(sum(20));
