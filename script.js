@@ -1,12 +1,13 @@
 'use scrict';
 
-function counter(n) {
-	return function (x) {
-		return x + n
+function pathGenerator(url) {
+	return function (imageName) {
+		return url + imageName
 	}
 }
 
-let sum = counter(1)
-// console.log(sum);
-console.log(sum(15));
-console.log(sum(20));
+let urlToIcon = pathGenerator('http://mydomain.ru/assets/icons/')
+let urlToImages = pathGenerator('http://mydomain.ru/assets/images/')
+
+console.log(urlToIcon('clock.svg'));
+console.log(urlToImages('man.png'));
