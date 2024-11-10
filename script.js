@@ -1,120 +1,104 @@
+'use strict';
 // lesson07
 
-'use strict';
+const appData = {
+	title: '',
+	screens: '',
+	screenPrice: 0,
+	adaptive: true,
+	rollback: 50,
+	service1: '',
+	service2: '',
+	servicePrice1: 0,
+	servicePrice2: 0,
+	ask1: "Какой дополнительный тип услуги нужен?",
+	ask2: "Сколько это будет стоить?",
+	fullPrice: 0,
+	servicePrices: 0,
+	servicePercentPrices: 0,
+	allServicePrices: 0,
+	rollbackPrice: 0,
+	asking: function () {
+		appData.title = prompt("Как называется ваш проект?", "Калькулятор вёрстки");
+		appData.screens = prompt("Какие типы экранов нужно разработать?", "Простые, Сложные")
 
-const books = [
-	{ id: 0, name: 'Дорога домой', author: 'Виталий Зыков', price: 1200 },
-	{ id: 1, name: 'Война за выживание', author: 'Виталий Зыков', price: 1500 },
-	{ id: 2, name: 'Мир бесчисленных островов', author: 'Виталий Зыков', price: 1300 },
-	{ id: 3, name: 'Далекая страна', author: 'Алекс Кош', price: 950 },
-	{ id: 4, name: 'Адреналин', author: 'Алекс Кош', price: 1650 },
-]
+		do {
+			appData.screenPrice = +prompt("Сколько будет стоить данная работа?", 10000)
+		} while (!appData.isNumber(appData.screenPrice))
 
-// Добавление и удаление элементов
-// 1) CONCAT arr.concat(arg1, arg2, ...)
-// const newArray = books.concat({id: 5, name: 'Школа Пепла', author: 'Виталий Зыков', price: 1980})
+		appData.adaptive = confirm("Нужен ли адаптив на сайте?")
+	},
+	isNumber: function (num) {
+		return !isNaN(parseFloat(num)) && isFinite(num)
+	},
+	getRollbackMessage: function (price) {
+		switch (true) {
+			// Учесть варианты 0, 15000 и 30000
+			case price == 0:
+			case price == 15000:
+			case price == 30000:
+				return "Секретная суперскидка 50%"
+			case price > 30000:
+				return "Даем скидку в 10%"
+			case 15000 < price && price < 30000:
+				return "Даем скидку в 5%"
+			case 0 < price && price < 15000:
+				return "Скидка не предусмотрена"
+			case price < 0:
+				return "Что-то пошло не так"
+		}
+	},
+	getAllServicePrices: function () {
+		for (let i = 0; i < 2; i++) {
+			if (i === 0) {
+				appData.service1 = prompt(appData.ask1)
+				do {
+					appData.servicePrice1 = +prompt(appData.ask2)
+				} while (!appData.isNumber(appData.servicePrice1))
 
-// 2) arr.slice([start], [end])
-// const newArray = books.slice(0, 3) 
+			} else if (i === 1) {
+				appData.service2 = prompt(appData.ask1)
+				do {
+					appData.servicePrice2 = +prompt(appData.ask2)
+				} while (!appData.isNumber(appData.servicePrice2))
 
-// 3) arr.splice(index, deleteCount, elements)
-// универсальный. умеет добавлять и удалять. 
-// не возвращает новый массив! меняет исходный
-// index - c какого индекса удалять
-// deleteCount -  сколько элементов удалять
-// elements - добавляемые элементы, можно несколько
+			}
+		}
+		return appData.servicePrice1 + appData.servicePrice2
+	},
+	getFullPrice: function () {
+		return appData.screenPrice + appData.allServicePrices
+	},
+	getTitle: function (title) {
+		title = title.trim();
+		return title[0].toUpperCase() + title.substring(1).toLowerCase();
+	},
+	getServicePercentPrices: function () {
+		return appData.fullPrice - Math.ceil(appData.fullPrice * (appData.rollback / 100));
+	},
+	logger: function () {
+		console.log(appData.title);
+		console.log(appData.fullPrice);
+		console.log(appData.allServicePrices);
+		console.log(appData.servicePercentPrices);
+		console.log(appData.rollbackPrice);
+		console.log("Свойства и методы объекта appData:")
+		for (let key in appData) {
+			console.log(key);
+		}
+	},
+	start: function () {
+		appData.asking();
+		appData.allServicePrices = appData.getAllServicePrices();
+		appData.fullPrice = appData.getFullPrice();
+		appData.servicePercentPrices = appData.getServicePercentPrices();
+		appData.title = appData.getTitle(appData.title);
+		appData.rollbackPrice = appData.getRollbackMessage(appData.fullPrice);
+		appData.logger()
+	}
 
-// books.splice(2, 3)
-// books.splice(2, 3, {id: 5, name: 'Школа Пепла', author: 'Виталий Зыков', price: 1980})
-// console.log(newArray)
-
-// Поиск и удаление элементов
-// 1) FIND возвращает целый объект по заданному условию
-//let result = arr.find(function(item, index, array) {
-// если true - возвращает текущий элемент
-// если все итерации оказались ложными возвращает undefined
-// item - очередной элемент
-// index - его индекс
-// array - сам массив
-// });
-
-// let result = books.find(function(item, index, array) {
-// 	return item.name === 'Война за выживание'
-// });
-
-// console.log(result)
-
-
-// result = books.find(function(item, index, array) {
-// 	return item.id === 3
-// });
-
-// console.log(result)
-
-// // метод findIndex возвращает только индекс
-// result = books.findIndex(function(item, index, array) {
-// 	return item.id === 3
-// });
-
-// console.log(result)
-
-// Методы перебора и преобразования массивов, для приведения массивов данных в нужный вид
-// 1) forEach() изменяет исходный массив!
-// arr.forEach(function(item, index, array) {
-// 	... делает что-то с item});
-
-// books.forEach(function(item) {
-// 	item.price = item.price + 'руб'
-// });
-
-// console.log(books);
-
-
-// 2) map() создаёт новый массив!
-// arr.map(function(item, index, array) {
-// 		возвращается новое значение вместо элемента
-// });
-
-// const newArray = books.map(function(item) {
-// 	item.price = item.price + 'руб'
-// 	return item
-// });
-
-// console.log(newArray);
+}
 
 
-// 3) filter()  создает новый массив!
-// arr.filter(function(item, index, array) {
-// 		если true - элемент добавляется к результату и перебор продолжается
-// 		возвращается пустой массив в случае если ничего не найдено
-// });
+appData.start();
 
-// const newArray = books.filter(function(item) {
-// 	return item.author === 'Виталий Зыков'
-// });
-
-// console.log(newArray);
-
-// 4) Последовательная обработка  REDUCE 
-// let value = arr.reduce(function(previousValue, item, index, array) {
-// 		если true - элемент добавляется к результату и перебор продолжается
-// 		возвращается пустой массив в случае если ничего не найдено
-// }, [initial]);
-
-// const result = books.reduce(function(sum, item){
-// 	return sum + item.price
-// }, 0)
-
-// console.log(result);
-
-// 5) Последовательная обработка  reduceRight  переходит по массиву справа на лево
-// let value = arr.reduce(function(previousValue, item, index, array) {
-// 		если true - элемент добавляется к результату и перебор продолжается
-// 		возвращается пустой массив в случае если ничего не найдено
-// }, [initial]);
-
-const result = books.reduceRight(function (sum, item) {
-	return sum + item.price
-}, 0)
-
-console.log(result);
